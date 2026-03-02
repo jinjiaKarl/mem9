@@ -275,25 +275,49 @@ func (r *MemoryRepo) crdtUpsertOnce(
 	clockJSON := marshalClock(toWrite.VectorClock)
 
 	if existing == nil {
-		_, err = tx.ExecContext(ctx,
-			`INSERT INTO memories (id, space_id, content, key_name, source, tags, metadata, embedding, version, updated_by, created_at, updated_at, vector_clock, origin_agent, tombstone)
-			 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, NOW(), NOW(), ?, ?, 0)`,
-			toWrite.ID, spaceID, toWrite.Content, nullString(keyName), nullString(toWrite.Source),
-			tagsJSON, nullJSON(toWrite.Metadata), vecToString(toWrite.Embedding),
-			nullString(toWrite.UpdatedBy),
-			clockJSON, nullString(toWrite.OriginAgent),
-		)
+		if r.autoModel != "" {
+			_, err = tx.ExecContext(ctx,
+				`INSERT INTO memories (id, space_id, content, key_name, source, tags, metadata, version, updated_by, created_at, updated_at, vector_clock, origin_agent, tombstone)
+				 VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?, NOW(), NOW(), ?, ?, 0)`,
+				toWrite.ID, spaceID, toWrite.Content, nullString(keyName), nullString(toWrite.Source),
+				tagsJSON, nullJSON(toWrite.Metadata),
+				nullString(toWrite.UpdatedBy),
+				clockJSON, nullString(toWrite.OriginAgent),
+			)
+		} else {
+			_, err = tx.ExecContext(ctx,
+				`INSERT INTO memories (id, space_id, content, key_name, source, tags, metadata, embedding, version, updated_by, created_at, updated_at, vector_clock, origin_agent, tombstone)
+				 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, NOW(), NOW(), ?, ?, 0)`,
+				toWrite.ID, spaceID, toWrite.Content, nullString(keyName), nullString(toWrite.Source),
+				tagsJSON, nullJSON(toWrite.Metadata), vecToString(toWrite.Embedding),
+				nullString(toWrite.UpdatedBy),
+				clockJSON, nullString(toWrite.OriginAgent),
+			)
+		}
 	} else {
-		_, err = tx.ExecContext(ctx,
-			`UPDATE memories SET content = ?, source = ?, tags = ?, metadata = ?, embedding = ?,
-			 version = version + 1, updated_by = ?, updated_at = NOW(),
-			 vector_clock = ?, origin_agent = ?, tombstone = 0
-			 WHERE space_id = ? AND key_name = ?`,
-			toWrite.Content, nullString(toWrite.Source), tagsJSON, nullJSON(toWrite.Metadata),
-			vecToString(toWrite.Embedding), nullString(toWrite.UpdatedBy),
-			clockJSON, nullString(toWrite.OriginAgent),
-			spaceID, keyName,
-		)
+		if r.autoModel != "" {
+			_, err = tx.ExecContext(ctx,
+				`UPDATE memories SET content = ?, source = ?, tags = ?, metadata = ?,
+				 version = version + 1, updated_by = ?, updated_at = NOW(),
+				 vector_clock = ?, origin_agent = ?, tombstone = 0
+				 WHERE space_id = ? AND key_name = ?`,
+				toWrite.Content, nullString(toWrite.Source), tagsJSON, nullJSON(toWrite.Metadata),
+				nullString(toWrite.UpdatedBy),
+				clockJSON, nullString(toWrite.OriginAgent),
+				spaceID, keyName,
+			)
+		} else {
+			_, err = tx.ExecContext(ctx,
+				`UPDATE memories SET content = ?, source = ?, tags = ?, metadata = ?, embedding = ?,
+				 version = version + 1, updated_by = ?, updated_at = NOW(),
+				 vector_clock = ?, origin_agent = ?, tombstone = 0
+				 WHERE space_id = ? AND key_name = ?`,
+				toWrite.Content, nullString(toWrite.Source), tagsJSON, nullJSON(toWrite.Metadata),
+				vecToString(toWrite.Embedding), nullString(toWrite.UpdatedBy),
+				clockJSON, nullString(toWrite.OriginAgent),
+				spaceID, keyName,
+			)
+		}
 	}
 	if err != nil {
 		return nil, false, fmt.Errorf("crdt upsert write: %w", err)
