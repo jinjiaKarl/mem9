@@ -232,9 +232,9 @@ Assistant: Sounds productive!
 Output: {"facts": ["Had a meeting with John at 3pm", "Discussed the new project timeline with John"]}
 
 Input:
-User: 我叫张明，是一名后端工程师，主要用 Go 和 Python。
-Assistant: 你好张明！
-Output: {"facts": ["名字是张明", "是后端工程师", "主要使用 Go 和 Python"]}
+User: My name is Ming Zhang, I am a backend engineer, mainly using Go and Python.
+Assistant: Hi Ming Zhang!
+Output: {"facts": ["Name is Ming Zhang", "Is a backend engineer", "Mainly uses Go and Python"]}
 
 Input:
 User: My favorite movies are Inception and Interstellar. I also love Italian food, especially pizza.

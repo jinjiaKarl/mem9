@@ -546,9 +546,9 @@ func TestTruncateRunes(t *testing.T) {
 		{name: "short ASCII", input: "hello", max: 10, expected: "hello"},
 		{name: "exact ASCII", input: "hello", max: 5, expected: "hello"},
 		{name: "truncate ASCII", input: "hello world", max: 5, expected: "hello..."},
-		{name: "Chinese no truncate", input: "你好世界", max: 4, expected: "你好世界"},
-		{name: "Chinese truncate", input: "你好世界再见", max: 4, expected: "你好世界..."},
-		{name: "mixed content", input: "hello你好world", max: 7, expected: "hello你好..."},
+		{name: "multibyte no truncate", input: "caf\u00e9", max: 4, expected: "caf\u00e9"},
+		{name: "multibyte truncate", input: "caf\u00e9 latt\u00e9", max: 4, expected: "caf\u00e9..."},
+		{name: "emoji content", input: "hello\U0001F600world", max: 7, expected: "hello\U0001F600w..."},
 		{name: "empty string", input: "", max: 5, expected: ""},
 		{name: "zero max", input: "hello", max: 0, expected: "..."},
 	}
