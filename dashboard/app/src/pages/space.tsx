@@ -412,6 +412,8 @@ export function SpacePage() {
               variant="ghost"
               size="icon-sm"
               onClick={disconnect}
+              data-mp-event="Dashboard/Space/DisconnectClicked"
+              data-mp-page-name="space"
               className="text-soft-foreground hover:text-destructive"
               title={t("space.disconnect")}
             >
@@ -449,6 +451,8 @@ export function SpacePage() {
                             })
                           : undefined
                       }
+                      data-mp-event="Dashboard/Space/TotalStatClicked"
+                      data-mp-page-name="space"
                       className={`rounded-xl border px-3 py-2.5 text-left transition-all ${
                         !search.type
                           ? "border-foreground/15 bg-foreground/[0.03]"
@@ -465,6 +469,9 @@ export function SpacePage() {
 
                     <button
                       onClick={() => handleTypeClick("pinned")}
+                      data-mp-event="Dashboard/Space/PinnedStatClicked"
+                      data-mp-page-name="space"
+                      data-mp-memory-type="pinned"
                       className={`rounded-xl border px-3 py-2.5 text-left transition-all ${
                         search.type === "pinned"
                           ? "border-type-pinned/30 bg-type-pinned/5"
@@ -487,6 +494,9 @@ export function SpacePage() {
 
                     <button
                       onClick={() => handleTypeClick("insight")}
+                      data-mp-event="Dashboard/Space/InsightStatClicked"
+                      data-mp-page-name="space"
+                      data-mp-memory-type="insight"
                       className={`rounded-xl border px-3 py-2.5 text-left transition-all ${
                         search.type === "insight"
                           ? "border-type-insight/30 bg-type-insight/5"
@@ -550,6 +560,8 @@ export function SpacePage() {
                       search: { ...search, q: undefined },
                     });
                   }}
+                  data-mp-event="Dashboard/Space/SearchClearClicked"
+                  data-mp-page-name="space"
                   className="absolute top-1/2 right-3.5 -translate-y-1/2 text-soft-foreground hover:text-foreground"
                 >
                   <X className="size-4" />
@@ -572,6 +584,8 @@ export function SpacePage() {
                           search: { ...search, q: undefined },
                         });
                       }}
+                      data-mp-event="Dashboard/Space/SearchFilterClearClicked"
+                      data-mp-page-name="space"
                       className="text-muted-foreground hover:text-foreground"
                     >
                       <X className="size-3" />
@@ -586,6 +600,9 @@ export function SpacePage() {
                         search: { ...search, type: undefined },
                       })
                     }
+                    data-mp-event="Dashboard/Space/TypeFilterClearClicked"
+                    data-mp-page-name="space"
+                    data-mp-memory-type={search.type}
                     className="inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-foreground hover:bg-secondary/80"
                   >
                     {t(
@@ -599,6 +616,9 @@ export function SpacePage() {
                 {facet && (
                   <button
                     onClick={() => handleFacetChange(undefined)}
+                    data-mp-event="Dashboard/Space/FacetFilterClearClicked"
+                    data-mp-page-name="space"
+                    data-mp-facet={facet}
                     className="inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-foreground hover:bg-secondary/80"
                   >
                     {t(`facet.${facet}`)}
@@ -608,6 +628,9 @@ export function SpacePage() {
                 {tag && (
                   <button
                     onClick={() => handleTagChange(undefined)}
+                    data-mp-event="Dashboard/Space/TagFilterClearClicked"
+                    data-mp-page-name="space"
+                    data-mp-tag={tag}
                     className="inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-foreground hover:bg-secondary/80"
                   >
                     #{tag}
@@ -617,6 +640,9 @@ export function SpacePage() {
                 {analysisCategory && (
                   <button
                     onClick={() => handleAnalysisCategoryChange(undefined)}
+                    data-mp-event="Dashboard/Space/AnalysisFilterClearClicked"
+                    data-mp-page-name="space"
+                    data-mp-category={analysisCategory}
                     className="inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-foreground hover:bg-secondary/80"
                   >
                     {t(`analysis.category.${analysisCategory}`)}
@@ -632,6 +658,8 @@ export function SpacePage() {
                         search: {},
                       });
                     }}
+                    data-mp-event="Dashboard/Space/ClearAllFiltersClicked"
+                    data-mp-page-name="space"
                     className="text-primary/70 hover:text-primary hover:underline"
                   >
                     {t("filter.clear_all")}
@@ -673,6 +701,8 @@ export function SpacePage() {
                   variant={analysisCategory ? "secondary" : "outline"}
                   size="sm"
                   onClick={() => setMobileAnalysisOpen(true)}
+                  data-mp-event="Dashboard/Space/MobileAnalysisOpenClicked"
+                  data-mp-page-name="space"
                   className="gap-1.5"
                 >
                   <BarChart3 className="size-3.5" />
@@ -683,6 +713,8 @@ export function SpacePage() {
                 variant="outline"
                 size="sm"
                 onClick={() => setExportOpen(true)}
+                data-mp-event="Dashboard/Space/ExportOpenClicked"
+                data-mp-page-name="space"
                 className="gap-1.5"
               >
                 <Download className="size-3.5" />
@@ -692,6 +724,8 @@ export function SpacePage() {
                 variant="outline"
                 size="sm"
                 onClick={() => setImportOpen(true)}
+                data-mp-event="Dashboard/Space/ImportOpenClicked"
+                data-mp-page-name="space"
                 className="gap-1.5"
               >
                 <Upload className="size-3.5" />
@@ -702,6 +736,8 @@ export function SpacePage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setAddOpen(true)}
+                  data-mp-event="Dashboard/Space/AddOpenClicked"
+                  data-mp-page-name="space"
                   className="gap-1.5"
                 >
                   <Plus className="size-3.5" />
@@ -756,6 +792,8 @@ export function SpacePage() {
                           fetchNextPage();
                         }}
                         disabled={isFetchingMore}
+                        data-mp-event="Dashboard/Space/LoadMoreClicked"
+                        data-mp-page-name="space"
                         className="text-sm text-soft-foreground"
                       >
                         {isFetchingMore && (
